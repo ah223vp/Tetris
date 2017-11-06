@@ -1,5 +1,5 @@
 package model;
 
 public interface IObserver {
-    void draw();
+    void draw(int[][] board);
 }

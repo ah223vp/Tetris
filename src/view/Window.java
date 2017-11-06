@@ -22,8 +22,8 @@ public class Window extends Application {
         Canvas canvas = new Canvas();
         root.setCenter(canvas);
 
-        canvas.setHeight(450);
-        canvas.setWidth(250);
+        canvas.setHeight(460);
+        canvas.setWidth(200);
 
         GraphicsContext context = canvas.getGraphicsContext2D();
 
