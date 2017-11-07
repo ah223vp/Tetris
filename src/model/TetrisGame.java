@@ -1,27 +1,27 @@
 package model;
 
 import javafx.animation.AnimationTimer;
+import model.shapeFactory.Shape;
 
 public class TetrisGame {
 
-    AnimationTimer loop;
-    ShapeFactory shapeFactory;
-    Board board;
+    private AnimationTimer loop;
+    private ShapeControl shapeControl;
+    private Board board;
 
     public TetrisGame(){
 
         this.board = new Board();
-
-        this.shapeFactory = new ShapeFactory(this.board);
+        this.shapeControl = new ShapeControl(this.board);
 
         gameLoop();
     }
-    public ShapeFactory getFactory(){
-        return this.shapeFactory;
+    public ShapeControl getFactory(){
+        return this.shapeControl;
     }
     public void start(){
         this.loop.start();
-        this.shapeFactory.createSquare();
+        this.shapeControl.createSquare();
     }
     private void gameLoop(){
         loop = new AnimationTimer(){
@@ -32,38 +32,40 @@ public class TetrisGame {
                 // Framerate
                 if(now - lastUpdate >= 500_000_000){
                     //board.updateBoard();
-                    shapeFactory.moveCurrentDown();
+                    shapeControl.moveCurrentDown();
                     lastUpdate = now;
                 }
-
             }
         };
     }
+    public void rotatePiece(){
+        shapeControl.getCurrentShape().rotate();
+        shapeControl.getSub().draw(this.board.getBoard());
+    }
     public void moveLeft(){
         if(isMovementValidLeft()){
-            Shape current = shapeFactory.getCurrentShape();
+            Shape current = shapeControl.getCurrentShape();
             current.getPosition().x -= 1;
-            shapeFactory.getSub().draw(this.board.getBoard());
+            shapeControl.getSub().draw(this.board.getBoard());
         }
 
     }
     public void moveRight(){
         if(isMovementValidRight()){
-            Shape current = shapeFactory.getCurrentShape();
+            Shape current = shapeControl.getCurrentShape();
             current.getPosition().x += 1;
-            shapeFactory.getSub().draw(this.board.getBoard());
+            shapeControl.getSub().draw(this.board.getBoard());
         }
-
     }
 
     // Fix this, it needs to check for the boxes.
-    // Create function in shape that gets the indexes from the sides.
+    // Check valid rotations aswell.
     public boolean isMovementValidRight(){
-        return shapeFactory.getCurrentShape().getPosition().x + shapeFactory.getCurrentShape()
+        return shapeControl.getCurrentShape().getPosition().x + shapeControl.getCurrentShape()
                 .getRightSideIndex() < 11;
     }
     public boolean isMovementValidLeft(){
-        return shapeFactory.getCurrentShape().getPosition().x + shapeFactory.getCurrentShape()
+        return shapeControl.getCurrentShape().getPosition().x + shapeControl.getCurrentShape()
                 .getLeftSideIndex() > 2;
     }
 }

@@ -1,17 +1,19 @@
 package model;
 
+import model.shapeFactory.Shape;
+
 import java.util.ArrayList;
 
-public class ShapeFactory {
+public class ShapeControl {
 
     private Shape currentFalling;
     private ArrayList<Shape> objects = new ArrayList<>();
 
-    Board board;
+    private Board board;
 
     private IObserver sub;
 
-    public ShapeFactory(Board board){
+    public ShapeControl(Board board){
         this.board = board;
     }
 
@@ -40,29 +42,14 @@ public class ShapeFactory {
         addObject(square);
 
     }
-    public void checkIfAtBottom(){
-        int bottomTempIndex = this.currentFalling.getBottomSideIndex() + this.currentFalling.getPosition().y;
 
-        if(bottomTempIndex >= 26){
+    public void moveCurrentDown(){
+
+        if(!this.board.updateBoard(objects, this.currentFalling)){
+            // Should be createShape instead
             createSquare();
         }
-        int temp = 0;
 
-        for(int i = 0; i < 4; i++){
-            if(this.currentFalling.getShape()[this.currentFalling.getBottomSideIndex()][temp] == 1
-                     && this.board.getBoard()[bottomTempIndex + 1][this.currentFalling.getPosition().x + i] == 1){
-                createSquare();
-            }
-            temp++;
-        }
-
-
-    }
-    public void moveCurrentDown(){
-        checkIfAtBottom();
-        this.currentFalling.getPosition().y += 1;
-        //this.board.checkCompleteRow();
-        this.board.updateBoard(objects);
     }
 
 }

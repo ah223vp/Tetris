@@ -1,7 +1,6 @@
 package view;
 
 import javafx.scene.canvas.Canvas;
-import model.ShapeFactory;
 import model.TetrisGame;
 
 public class KeyActions {
@@ -18,7 +17,7 @@ public class KeyActions {
             switch (e.getCode()){
                 case UP:
                     // Something similar
-                    //tetris.getFactory.rotate();
+                    tetris.rotatePiece();
                     break;
                 case DOWN:
                     //shapeFactory.getSnake().setMoveDown();

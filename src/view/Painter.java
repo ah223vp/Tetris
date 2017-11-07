@@ -3,22 +3,20 @@ package view;
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
 import model.IObserver;
-import model.Shape;
-import model.ShapeFactory;
+import model.shapeFactory.Shape;
+import model.ShapeControl;
 
-import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 
 public class Painter implements IObserver {
 
     GraphicsContext context;
-    ShapeFactory shapeFactory;
+    ShapeControl shapeFactory;
 
     private int unit = 20;
 
-    public Painter(GraphicsContext context, ShapeFactory shapeFactory){
+    public Painter(GraphicsContext context, ShapeControl shapeFactory){
         this.context = context;
         this.shapeFactory = shapeFactory;
     }
@@ -40,7 +38,7 @@ public class Painter implements IObserver {
                 for(int j = 0; j < 4; j++){
 
                     // Hardcoded, rotations needs to be sent from model.
-                    if(s.getShape()[i][j] == 1){
+                    if(s.getCurrentRotation()[i][j] == 1){
                         context.fillRect(temp.x + j * unit, temp.y + i * unit, unit, unit );
                     }
                 }
