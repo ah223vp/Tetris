@@ -1,12 +1,19 @@
 package model.shapeFactory;
 
-public class SquareShape extends Shape{
+import java.util.ArrayList;
 
+public class SquareShape implements IShape {
 
+    public ArrayList<int [][]> getDrawings(){
+        ArrayList<int [][]> shapes = new ArrayList<>();
 
-    public SquareShape(){
-        super();
+        shapes.add(new int[][]{
+                {0, 0, 0, 0},
+                {0, 0, 0, 0},
+                {0, 1, 1, 0},
+                {0, 1, 1, 0}
+        });
+
+        return shapes;
     }
-
-
 }

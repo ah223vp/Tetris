@@ -1,10 +1,7 @@
 package model;
 
-import model.shapeFactory.Shape;
-
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 
 public class Board {
 
@@ -57,21 +54,19 @@ public class Board {
     public int[][] getBoard(){
         return this.board;
     }
-    public boolean updateBoard(ArrayList<model.shapeFactory.Shape> objects, model.shapeFactory.Shape shape){
-
-
+    public boolean updateBoard(Shape shape){
 
         // Moving the shape down every frame.
         shape.getPosition().y +=1;
 
         for(int i = 0; i < shape.getCurrentRotation().length; i++ ){
             for (int j = 0; j < shape.getCurrentRotation()[i].length; j++){
-                if (shape.getCurrentRotation()[i][j] == 1){
-                    this.board[shape.getPosition().y + i][shape.getPosition().x + j] = 1;
+                if (shape.getCurrentRotation()[i][j] != 0){
+                    this.board[shape.getPosition().y + i][shape.getPosition().x + j]
+                            = shape.getCurrentRotation()[i][j] ;
                 }
             }
         }
-
         drawBoard();
 
         this.previousShapeRotation = shape.getCurrentRotation().clone();
@@ -86,7 +81,7 @@ public class Board {
             if(this.previousPosition != null){
                 for(int i = 0; i < this.previousShapeRotation.length; i++ ){
                     for (int j = 0; j < this.previousShapeRotation[i].length; j++){
-                        if (this.previousShapeRotation[i][j] == 1){
+                        if (this.previousShapeRotation[i][j] != 0){
                             this.board[this.previousPosition.y + i][this.previousPosition.x + j] = 0;
                         }
                     }
@@ -112,7 +107,7 @@ public class Board {
         for(int i = 0; i < this.board.length; i++){
             int checker = 0;
             for(int j = 0; j < this.board[i].length; j++){
-                if(this.board[i][j] == 1){
+                if(this.board[i][j] != 0){
                     checker++;
                 }
             }
@@ -121,21 +116,19 @@ public class Board {
                 deleteRow(i);
             }
         }
-
     }
     public boolean shapeIsAtBottom(Shape current){
         int bottomTempIndex = current.getBottomSideIndex() + current.getPosition().y;
 
         if(bottomTempIndex >= 26){
-            System.out.println("Tror den är i botten av boarden");
+            //System.out.println("Tror den är i botten av boarden");
             return true;
         }
-
         for(int i = 0; i < 4; i++){
-            if(current.getCurrentRotation()[current.getBottomSideIndex()][i] == 1
-                    && getBoard()[bottomTempIndex + 1][current.getPosition().x + i] == 1){
+            if(current.getCurrentRotation()[current.getBottomSideIndex()][i] != 0
+                    && getBoard()[bottomTempIndex + 1][current.getPosition().x + i] != 0){
 
-
+                /*
                 System.out.println("Tror att den är på en piece");
                 System.out.println(bottomTempIndex);
                 System.out.println(getBoard()[bottomTempIndex + 1][current.getPosition().x + i]);
@@ -153,9 +146,9 @@ public class Board {
                 System.out.println();
                 System.out.println();
                 System.out.println();
+                */
                 return true;
             }
-
         }
         return false;
     }

@@ -1,11 +1,13 @@
-package model.shapeFactory;
+package model;
 
+
+import model.shapeFactory.ShapeFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
-abstract class Shape implements IShape{
+public class Shape{
 
     private List<int [][]> shapes = new ArrayList<>();
     private int rotateIndex = 0;
@@ -18,30 +20,21 @@ abstract class Shape implements IShape{
     private int leftSideIndex;
     private int bottomSideIndex;
 
-    public Shape(){
-        this.initializeShapes();
+    public Shape(ShapeFactory shapeFactory){
+        this.initializeShapes(shapeFactory);
         this.currentRot = shapes.get(this.rotateIndex);
     }
 
-    public void initializeShapes(){
-        shapes.add(new int[][]{
-                {0, 0, 0, 0},
-                {0, 0, 0, 0},
-                {1, 1, 1, 1},
-                {0, 0, 0, 0}
-        });
-        shapes.add(new int[][]{
-                {0, 1, 0, 0},
-                {0, 1, 0, 0},
-                {0, 1, 0, 0},
-                {0, 1, 0, 0}
-        });
+    public void initializeShapes(ShapeFactory shapeFactory){
+
+        shapes = shapeFactory.getShapeDrawings().getDrawings();
+
         this.currentRot = shapes.get(0);
         this.rightSideIndex = setRightSideIndex();
         this.leftSideIndex = setLeftSideIndex();
         this.bottomSideIndex = setBottomSideIndex();
     }
-    public Shape createSquare(){
+    public Shape createShape(){
 
         pos.x = 5;
         pos.y = 0;
@@ -72,7 +65,7 @@ abstract class Shape implements IShape{
         int rightSide = 0;
         for(int i = 0; i < currentRot.length; i++){
             for(int j = 0; j < currentRot[i].length; j++){
-                if(currentRot[i][j] == 1 && rightSide < j){
+                if(currentRot[i][j] != 0 && rightSide < j){
                     rightSide = j;
                 }
             }
@@ -83,7 +76,7 @@ abstract class Shape implements IShape{
         int leftSide = 3;
         for(int i = 0; i < currentRot.length; i++){
             for(int j = currentRot[i].length-1; j >= 0; j--){
-                if(currentRot[i][j] == 1 && leftSide > j){
+                if(currentRot[i][j] != 0 && leftSide > j){
                     leftSide = j;
                 }
             }
@@ -94,7 +87,7 @@ abstract class Shape implements IShape{
         int bottomSide = -1;
         for(int i = 0; i < currentRot.length; i++){
             for(int j = 0; j < currentRot[i].length; j++){
-                if(currentRot[i][j] == 1 && bottomSide < i){
+                if(currentRot[i][j] != 0 && bottomSide < i){
                     bottomSide = i;
                 }
             }

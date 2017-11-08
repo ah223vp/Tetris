@@ -1,29 +1,24 @@
 package model;
 
-import model.shapeFactory.Shape;
+import model.shapeFactory.ShapeFactory;
 
-import java.util.ArrayList;
+
 
 public class ShapeControl {
 
     private Shape currentFalling;
-    private ArrayList<Shape> objects = new ArrayList<>();
 
     private Board board;
+
+    private ShapeFactory shapeFactory;
 
     private IObserver sub;
 
     public ShapeControl(Board board){
         this.board = board;
+        this.shapeFactory = new ShapeFactory();
     }
 
-    private void addObject(Shape shape){
-        objects.add(shape);
-
-    }
-    public ArrayList<Shape> getObjects(){
-        return objects;
-    }
     public void addSubscriber(IObserver sub){
         this.board.addSubscriber(sub);
         this.sub = sub;
@@ -36,16 +31,15 @@ public class ShapeControl {
     }
 
     // This will be createShape later on
-    public void createSquare(){
-        Shape square = new Shape().createSquare();
+    public void createSquare() {
+        Shape square = new Shape(this.shapeFactory).createShape();
         currentFalling = square;
-        addObject(square);
 
     }
 
     public void moveCurrentDown(){
 
-        if(!this.board.updateBoard(objects, this.currentFalling)){
+        if(!this.board.updateBoard(this.currentFalling)){
             // Should be createShape instead
             createSquare();
         }

@@ -2,11 +2,12 @@ package view;
 
 import javafx.scene.canvas.GraphicsContext;
 import javafx.scene.paint.Color;
+import javafx.scene.shape.Rectangle;
 import model.IObserver;
-import model.shapeFactory.Shape;
+
 import model.ShapeControl;
 
-import java.util.ArrayList;
+
 
 
 public class Painter implements IObserver {
@@ -27,30 +28,32 @@ public class Painter implements IObserver {
         context.setFill(Color.GRAY);
         context.fillRect(0,0,500,500);
 
-        context.setFill(Color.BLACK);
-
-        ArrayList<Shape> objects = shapeFactory.getObjects();
-
-        /*
-        for(Shape s: objects){
-            Point temp = s.getPosition();
-            for(int i = 0; i < 4; i++){
-                for(int j = 0; j < 4; j++){
-
-                    // Hardcoded, rotations needs to be sent from model.
-                    if(s.getCurrentRotation()[i][j] == 1){
-                        context.fillRect(temp.x + j * unit, temp.y + i * unit, unit, unit );
-                    }
-                }
-            }
-        }*/
 
         for(int i = 0; i < board.length; i++){
             for(int j = 0; j < board[i].length; j++){
-                if(board[i][j] == 1){
+                if(board[i][j] != 0){
+                    context.setFill(getColor(board[i][j]));
+
+                    context.setStroke(Color.BLACK);
+                    context.setLineWidth(2);
                     context.fillRect(j * unit-40, i * unit-80, unit, unit);
+                    context.strokeRect(j * unit-40, i * unit-80, unit, unit);
+
+
                 }
             }
         }
+    }
+    private Color getColor(int color){
+        switch(color){
+            case 1: return Color.RED;
+            case 2: return Color.YELLOWGREEN;
+            case 3: return Color.GREEN;
+            case 4: return Color.FORESTGREEN;
+            case 5: return Color.AZURE;
+            case 6: return Color.MAGENTA;
+            case 7: return Color.PINK;
+        }
+        return null;
     }
 }

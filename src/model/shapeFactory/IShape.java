@@ -1,17 +1,11 @@
 package model.shapeFactory;
 
-import java.awt.*;
+
+import java.util.ArrayList;
 
 public interface IShape {
 
-    void initializeShapes();
-    void rotate();
-    int getRightSideIndex();
-    int getLeftSideIndex();
-    int getBottomSideIndex();
-
-    Point getPosition();
-    int[][] getCurrentRotation();
+    ArrayList<int [][]> getDrawings();
 
 
 }

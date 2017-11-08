@@ -1,7 +1,6 @@
 package model;
 
 import javafx.animation.AnimationTimer;
-import model.shapeFactory.Shape;
 
 public class TetrisGame {
 
@@ -30,7 +29,7 @@ public class TetrisGame {
             @Override
             public void handle(long now) {
                 // Framerate
-                if(now - lastUpdate >= 500_000_000){
+                if(now - lastUpdate >= 100_000_000){
                     //board.updateBoard();
                     shapeControl.moveCurrentDown();
                     lastUpdate = now;
@@ -40,13 +39,13 @@ public class TetrisGame {
     }
     public void rotatePiece(){
         shapeControl.getCurrentShape().rotate();
-        shapeControl.getSub().draw(this.board.getBoard());
+        //shapeControl.getSub().draw(this.board.getBoard());
     }
     public void moveLeft(){
         if(isMovementValidLeft()){
             Shape current = shapeControl.getCurrentShape();
             current.getPosition().x -= 1;
-            shapeControl.getSub().draw(this.board.getBoard());
+            //shapeControl.getSub().draw(this.board.getBoard());
         }
 
     }
@@ -54,7 +53,7 @@ public class TetrisGame {
         if(isMovementValidRight()){
             Shape current = shapeControl.getCurrentShape();
             current.getPosition().x += 1;
-            shapeControl.getSub().draw(this.board.getBoard());
+            //shapeControl.getSub().draw(this.board.getBoard());
         }
     }
 
