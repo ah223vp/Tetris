@@ -5,7 +5,9 @@ import model.shapeFactory.ShapeFactory;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 public class Shape{
 
@@ -20,6 +22,8 @@ public class Shape{
     private int leftSideIndex;
     private int bottomSideIndex;
 
+    private Map<String, int[]> bottomPositions = new HashMap<>();
+
     public Shape(ShapeFactory shapeFactory){
         this.initializeShapes(shapeFactory);
         this.currentRot = shapes.get(this.rotateIndex);
@@ -30,6 +34,7 @@ public class Shape{
         shapes = shapeFactory.getShapeDrawings().getDrawings();
 
         this.currentRot = shapes.get(0);
+        setBottomPieces(this.currentRot);
         this.rightSideIndex = setRightSideIndex();
         this.leftSideIndex = setLeftSideIndex();
         this.bottomSideIndex = setBottomSideIndex();
@@ -47,6 +52,8 @@ public class Shape{
             rotateIndex++;
         }
         currentRot = shapes.get(rotateIndex);
+        bottomPositions.clear();
+        setBottomPieces(currentRot);
 
         this.rightSideIndex = setRightSideIndex();
         this.leftSideIndex = setLeftSideIndex();
@@ -60,6 +67,29 @@ public class Shape{
     }
     public int getBottomSideIndex(){
         return bottomSideIndex;
+    }
+    public Map<String, int []> getBottomPieces(){
+        return bottomPositions;
+    }
+    private void setBottomPieces(int[][] rotation){
+
+        // Easier collision detection to other pieces.
+
+        for(int i = 0; i < rotation.length; i++){
+            for(int j = 0; j < rotation[i].length; j++){
+                if(rotation[i][j] != 0 ){
+                    if(i == rotation.length - 1){
+                        bottomPositions.put("pos" + i+j, new int[] {i,j});
+                    }
+                    for(int k = 3; k > i ; k--){
+                        if (rotation[i+1][j] != 0) {
+                        }else {
+                            bottomPositions.put("pos" + i+j, new int[] {i,j});
+                        }
+                    }
+                }
+            }
+        }
     }
     private int setRightSideIndex(){
         int rightSide = 0;

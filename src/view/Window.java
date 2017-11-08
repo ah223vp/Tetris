@@ -10,12 +10,11 @@ import model.TetrisGame;
 
 public class Window extends Application {
 
-    private int WIDTH = 500;
+    private int WIDTH = 700;
     private int HEIGHT = 500;
 
 
     public void start(Stage primaryStage){
-
 
 
         BorderPane root = new BorderPane();
@@ -28,6 +27,9 @@ public class Window extends Application {
         GraphicsContext context = canvas.getGraphicsContext2D();
 
         initialize(context, canvas);
+
+        // Main background
+        root.setStyle("-fx-background-color: black");
 
         Scene scene = new Scene(root, WIDTH,HEIGHT);
 

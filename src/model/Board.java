@@ -2,6 +2,9 @@ package model;
 
 import java.awt.*;
 import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Map;
 
 public class Board {
 
@@ -121,35 +124,31 @@ public class Board {
         int bottomTempIndex = current.getBottomSideIndex() + current.getPosition().y;
 
         if(bottomTempIndex >= 26){
-            //System.out.println("Tror den är i botten av boarden");
             return true;
         }
-        for(int i = 0; i < 4; i++){
-            if(current.getCurrentRotation()[current.getBottomSideIndex()][i] != 0
-                    && getBoard()[bottomTempIndex + 1][current.getPosition().x + i] != 0){
 
+        currentShapeRotation = current.getCurrentRotation();
+
+
+        for(int[] pos : current.getBottomPieces().values()){
+            System.out.println(pos[0]+ ", " +pos[1]);
+            for(int i = 0; i < current.getBottomPieces().size(); i++){
                 /*
-                System.out.println("Tror att den är på en piece");
-                System.out.println(bottomTempIndex);
-                System.out.println(getBoard()[bottomTempIndex + 1][current.getPosition().x + i]);
-                for(int j = 0; j < current.getCurrentRotation().length; j++){
-                    System.out.println(Arrays.toString(current.getCurrentRotation()[j]));
-                }
-                System.out.println();
-                System.out.println();
-                System.out.println();
+                if(current.getCurrentRotation()[pos[0]][pos[1]] != 0
+                        && getBoard()[bottomTempIndex + 1][current.getPosition().x + i] != 0){
+                    //System.out.println("At bottom");
 
-                // Debugging
-                for(int j = 0; j < this.board.length; j++){
-                    System.out.println(Arrays.toString(this.board[j]));
+                    return true;
+                }*/
+
+                // Working maybe=!=!
+                if(getBoard()[current.getPosition().y + pos[0] +1][current.getPosition().x + pos[1]] != 0){
+                    return true;
                 }
-                System.out.println();
-                System.out.println();
-                System.out.println();
-                */
-                return true;
             }
         }
+        System.out.println("--------------------");
+
         return false;
     }
     public void drawBoard(){
