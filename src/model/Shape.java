@@ -23,6 +23,8 @@ public class Shape{
     private int bottomSideIndex;
 
     private Map<String, int[]> bottomPositions = new HashMap<>();
+    private Map<String, int[]> leftSidePositions = new HashMap<>();
+    private Map<String, int[]> rightSidePositions = new HashMap<>();
 
     public Shape(ShapeFactory shapeFactory){
         this.initializeShapes(shapeFactory);
