@@ -1,7 +1,5 @@
 package model;
 
-import java.util.HashMap;
-import java.util.Map;
 
 public class RotationValidator {
 
@@ -50,7 +48,7 @@ public class RotationValidator {
             for(int j = 0; j < shape.getNextRotation()[i].length; j++){
                 if(shape.getNextRotation()[i][j] != 0){
                     if(board[shape.getPosition().y + i][shape.getPosition().x + j + moveDistance] != 0 ||
-                            board[shape.getPosition().y + i + 1][shape.getPosition().x + j - moveDistance] != 0){
+                            board[shape.getPosition().y + i + 1][shape.getPosition().x + j + moveDistance] != 0){
                         System.out.println("Försöker rotera där en piece redan är. Flytta till höger");
                         return false;
                     }
@@ -94,7 +92,7 @@ public class RotationValidator {
                             }
                         }else {
                             int distance = 1;
-                            
+
                             if(!notIntersectingWithPieceToLeft(shape, board, distance)){
                                 return false;
                             }else{
