@@ -19,7 +19,9 @@ public class Window extends Application {
 
         BorderPane root = new BorderPane();
         Canvas canvas = new Canvas();
+        RightSidePane rightPane = new RightSidePane();
         root.setCenter(canvas);
+        root.setRight(rightPane.initialize());
 
         canvas.setHeight(460);
         canvas.setWidth(200);
