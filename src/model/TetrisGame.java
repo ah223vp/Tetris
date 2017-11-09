@@ -31,7 +31,7 @@ public class TetrisGame {
             @Override
             public void handle(long now) {
                 // Framerate
-                if(now - lastUpdate >= 100_000_000){
+                if(now - lastUpdate >= 300_000_000){
                     //board.updateBoard();
                     shapeControl.moveCurrentDown();
                     lastUpdate = now;

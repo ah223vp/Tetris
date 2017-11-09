@@ -30,6 +30,12 @@ public class Shape{
         shapes = shapeFactory.getShapeDrawings().getDrawings();
 
         this.currentRot = shapes.get(0);
+        if(shapes.size() == 1){
+            this.nextRotation = shapes.get(0);
+        }else {
+            this.nextRotation = shapes.get(1);
+        }
+
         setBottomPieces(this.currentRot);
 
         this.bottomSideIndex = setBottomSideIndex();
