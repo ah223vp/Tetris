@@ -131,7 +131,7 @@ public class Board {
 
 
         for(int[] pos : current.getBottomPieces().values()){
-            System.out.println(pos[0]+ ", " +pos[1]);
+            //System.out.println(pos[0]+ ", " +pos[1]);
             for(int i = 0; i < current.getBottomPieces().size(); i++){
                 /*
                 if(current.getCurrentRotation()[pos[0]][pos[1]] != 0
@@ -147,7 +147,7 @@ public class Board {
                 }
             }
         }
-        System.out.println("--------------------");
+        //System.out.println("--------------------");
 
         return false;
     }

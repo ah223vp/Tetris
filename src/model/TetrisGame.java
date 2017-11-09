@@ -8,10 +8,12 @@ public class TetrisGame {
     private ShapeControl shapeControl;
     private Board board;
 
+
     public TetrisGame(){
 
         this.board = new Board();
         this.shapeControl = new ShapeControl(this.board);
+
 
         gameLoop();
     }
@@ -20,7 +22,7 @@ public class TetrisGame {
     }
     public void start(){
         this.loop.start();
-        this.shapeControl.createSquare();
+        this.shapeControl.createShape();
     }
     private void gameLoop(){
         loop = new AnimationTimer(){
@@ -38,33 +40,20 @@ public class TetrisGame {
         };
     }
     public void rotatePiece(){
-        shapeControl.getCurrentShape().rotate();
-        //shapeControl.getSub().draw(this.board.getBoard());
+        shapeControl.rotate();
+
     }
     public void moveLeft(){
-        if(isMovementValidLeft()){
-            Shape current = shapeControl.getCurrentShape();
-            current.getPosition().x -= 1;
-            //shapeControl.getSub().draw(this.board.getBoard());
-        }
+        shapeControl.moveLeft();
+
 
     }
     public void moveRight(){
-        if(isMovementValidRight()){
-            Shape current = shapeControl.getCurrentShape();
-            current.getPosition().x += 1;
-            //shapeControl.getSub().draw(this.board.getBoard());
-        }
+        shapeControl.moveRight();
+
     }
 
-    // Fix this, it needs to check for the boxes.
-    // Check valid rotations aswell.
-    public boolean isMovementValidRight(){
-        return shapeControl.getCurrentShape().getPosition().x + shapeControl.getCurrentShape()
-                .getRightSideIndex() < 11;
-    }
-    public boolean isMovementValidLeft(){
-        return shapeControl.getCurrentShape().getPosition().x + shapeControl.getCurrentShape()
-                .getLeftSideIndex() > 2;
-    }
+
+
+
 }
