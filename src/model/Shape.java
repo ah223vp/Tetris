@@ -16,16 +16,9 @@ public class Shape{
 
     private int[][] currentRot;
     private int[][] nextRotation;
-
     private Point pos = new Point();
-
-    private int rightSideIndex;
-    private int leftSideIndex;
     private int bottomSideIndex;
-
     private Map<String, int[]> bottomPositions = new HashMap<>();
-    private Map<String, int[]> leftSidePositions = new HashMap<>();
-    private Map<String, int[]> rightSidePositions = new HashMap<>();
 
     public Shape(ShapeFactory shapeFactory){
         this.initializeShapes(shapeFactory);
@@ -38,11 +31,7 @@ public class Shape{
 
         this.currentRot = shapes.get(0);
         setBottomPieces(this.currentRot);
-        setRightSidePieces(this.currentRot);
-        setLeftSidePieces(this.currentRot);
 
-        this.rightSideIndex = setRightSideIndex();
-        this.leftSideIndex = setLeftSideIndex();
         this.bottomSideIndex = setBottomSideIndex();
     }
     public Shape createShape(){
@@ -57,7 +46,6 @@ public class Shape{
         }else{
             rotateIndex++;
         }
-
         if(rotateIndex == shapes.size() - 1){
             nextRotation = shapes.get(0);
         }else {
@@ -65,110 +53,86 @@ public class Shape{
         }
 
         currentRot = shapes.get(rotateIndex);
-
-
         bottomPositions.clear();
-        rightSidePositions.clear();
-        leftSidePositions.clear();
-
         setBottomPieces(currentRot);
-        setRightSidePieces(currentRot);
-        setLeftSidePieces(currentRot);
-
-        this.rightSideIndex = setRightSideIndex();
-        this.leftSideIndex = setLeftSideIndex();
         this.bottomSideIndex = setBottomSideIndex();
     }
     public int[][] getNextRotation(){
         return nextRotation;
     }
-    public int getRightSideIndex(){
-        return rightSideIndex;
-    }
-    public int getLeftSideIndex(){
-        return leftSideIndex;
-    }
+
     public int getBottomSideIndex(){
         return bottomSideIndex;
     }
     public Map<String, int []> getBottomPieces(){
         return bottomPositions;
     }
-    public Map<String, int []> getLeftSidePieces(){
-        return leftSidePositions;
-    }
-    public Map<String, int []> getRightSidePieces(){
-        return rightSidePositions;
-    }
 
-    private int setRightSideIndex(){
+    public int getRightSideIndex(int[][] rotation){
         int rightSide = 0;
-        for(int i = 0; i < currentRot.length; i++){
-            for(int j = 0; j < currentRot[i].length; j++){
-                if(currentRot[i][j] != 0 && rightSide < j){
+        for(int i = 0; i < rotation.length; i++){
+            for(int j = 0; j < rotation[i].length; j++){
+                if(rotation[i][j] != 0 && rightSide < j){
                     rightSide = j;
                 }
             }
         }
         return rightSide;
     }
-    private void setRightSidePieces(int [][] rotation){
 
+    public Map<String, int[]> getRightSidePieces(int [][] rotation){
+        Map<String, int[]> map = new HashMap<>();
         // Working
         for(int i = 0; i < rotation.length; i++){
             for(int j = 0; j < rotation[i].length; j++){
                 if(rotation[i][j] != 0 ){
                     if(j == rotation.length - 1){
-                        rightSidePositions.put("pos" + i+j, new int[] {i,j});
+                        map.put("pos" + i+j, new int[] {i,j});
                     }
                     for(int k = 3; k > j ; k--){
                         if (rotation[i][j+1] != 0) {
                         }else {
-                            rightSidePositions.put("pos" + i+j, new int[] {i,j});
+                            map.put("pos" + i+j, new int[] {i,j});
                         }
                     }
                 }
             }
         }
-        /*
-        for(int[] s: rightSidePositions.values()){
-            System.out.println(s[0]+ ", " + s[1]);
-        }
-        System.out.println("------------------");
-        */
+        return map;
     }
-    private int setLeftSideIndex(){
+
+    public int getLeftSideIndex(int[][] rotation){
         int leftSide = 3;
-        for(int i = 0; i < currentRot.length; i++){
-            for(int j = currentRot[i].length-1; j >= 0; j--){
-                if(currentRot[i][j] != 0 && leftSide > j){
+        for(int i = 0; i < rotation.length; i++){
+            for(int j = rotation[i].length-1; j >= 0; j--){
+                if(rotation[i][j] != 0 && leftSide > j){
                     leftSide = j;
                 }
             }
         }
         return leftSide;
     }
-    private void setLeftSidePieces(int[][] rotation){
+
+    public Map<String, int[]> getLeftSidePieces(int[][] rotation){
+        Map<String, int[]> map = new HashMap<>();
         for(int i = 0; i < rotation.length; i++){
             for(int j = currentRot.length - 1; j >= 0; j--){
                 if(rotation[i][j] != 0 ){
                     if(j == 0){
-                        leftSidePositions.put("pos" + i+j, new int[] {i,j});
+                        map.put("pos" + i+j, new int[] {i,j});
                     }
                     for(int k = 0; k < j ; k++){
                         if (rotation[i][j-1] != 0) {
                         }else {
-                            leftSidePositions.put("pos" + i+j, new int[] {i,j});
+                            map.put("pos" + i+j, new int[] {i,j});
                         }
                     }
                 }
             }
         }
-        for(int[] s: leftSidePositions.values()){
-            System.out.println(s[0]+ ", " + s[1]);
-        }
-        System.out.println("------------------");
+        return map;
     }
+
     private int setBottomSideIndex(){
         int bottomSide = -1;
         for(int i = 0; i < currentRot.length; i++){
@@ -180,10 +144,10 @@ public class Shape{
         }
         return bottomSide;
     }
+
     private void setBottomPieces(int[][] rotation){
 
         // Easier collision detection to other pieces.
-
         for(int i = 0; i < rotation.length; i++){
             for(int j = 0; j < rotation[i].length; j++){
                 if(rotation[i][j] != 0 ){
@@ -199,6 +163,12 @@ public class Shape{
                 }
             }
         }
+    }
+    public void moveRight(int value){
+        getPosition().x += value;
+    }
+    public void moveLeft(int value){
+        getPosition().x -= value;
     }
 
     public Point getPosition(){

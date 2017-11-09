@@ -52,23 +52,23 @@ public class ShapeControl {
     }
     public void moveRight(){
         if(isMovementValidRight()){
-            currentFalling.getPosition().x +=1;
+            currentFalling.moveRight(1);
         }
     }
     private boolean isMovementValidRight(){
 
         if(currentFalling.getPosition().x + currentFalling
-                .getRightSideIndex() >= 11){
+                .getRightSideIndex(currentFalling.getCurrentRotation()) >= 11){
             return false;
         }
 
         // Checking that the pieces next to the ones that are going to be moved are empty
-        for(int[] s : currentFalling.getRightSidePieces().values()){
+        for(int[] s : currentFalling.getRightSidePieces(currentFalling.getCurrentRotation()).values()){
             if(this.boardSim[currentFalling.getPosition().y + s[0]][currentFalling.getPosition().x
                     + s[1] + 1] != 0 ||
                     this.boardSim[currentFalling.getPosition().y + s[0] + 1][currentFalling.getPosition().x
                             + s[1] + 1] != 0){
-                System.out.println("Den tror att den tar i en piece!");
+
                 return false;
             }
         }
@@ -78,7 +78,7 @@ public class ShapeControl {
     }
     public void moveLeft(){
         if(isMovementValidLeft()){
-            currentFalling.getPosition().x -=1;
+            currentFalling.moveLeft(1);
         }
     }
 
@@ -86,17 +86,17 @@ public class ShapeControl {
     private boolean isMovementValidLeft(){
 
         if(currentFalling.getPosition().x + currentFalling
-                .getLeftSideIndex() <= 2){
+                .getLeftSideIndex(currentFalling.getCurrentRotation()) <= 2){
             return false;
         }
 
         // Checking that the pieces next to the ones that are going to be moved are empty
-        for(int[] s : currentFalling.getLeftSidePieces().values()){
+        for(int[] s : currentFalling.getLeftSidePieces(currentFalling.getCurrentRotation()).values()){
             if(this.boardSim[currentFalling.getPosition().y + s[0]][currentFalling.getPosition().x
                     + s[1] - 1] != 0 ||
                     this.boardSim[currentFalling.getPosition().y + s[0] + 1][currentFalling.getPosition().x
                             + s[1] - 1] != 0){
-                System.out.println("Den tror att den tar i en piece!");
+
                 return false;
             }
         }
