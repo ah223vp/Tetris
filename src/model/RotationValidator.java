@@ -10,8 +10,8 @@ public class RotationValidator {
 
     public boolean validate(Shape shape, int[][] board){
 
-        int rightSideIndex = shape.getRightSideIndex(shape.getNextRotation());
-        int leftSideIndex = shape.getLeftSideIndex(shape.getNextRotation());
+        int rightSideIndex = shape.getRightSideIndex(shape.getNextRotation())
+        int leftSid   eIndex = shape.getLeftSideIndex(shape.getNextRotation());
 
 
         // Check rightside
