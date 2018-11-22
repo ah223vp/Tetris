@@ -1,5 +1,9 @@
 <project>
 
+    <target name="test">
+        <delete dir="build"/>
+    </target>
+    
     <target name="clean">
         <delete dir="build"/>
     </target>
