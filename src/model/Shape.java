@@ -21,8 +21,8 @@ public class Shape{
     private Map<String, int[]> bottomPositions = new HashMap<>();
 
     public Shape(ShapeFactory shapeFactory){
-        this.initia   lizeShapes(shapeFactory);
-        this.currentRot = shapes.get(this.rotateIndex)
+        this.initializeShapes(shapeFactory);
+        this.currentRot = shapes.get(this.rotateIndex);
     }
 
     public void initializeShapes(ShapeFactory shapeFactory){
